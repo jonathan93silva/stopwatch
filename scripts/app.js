@@ -1,10 +1,10 @@
 const page = {
     timerIsRunning: false,
 
-    milliseconds: 1,
-    seconds: 57,
-    minutes: 59,
     hours: 0,
+    minutes: 0,
+    seconds: 0,
+    milliseconds: 0,
 
     load(){
         //load historic
@@ -22,8 +22,10 @@ const page = {
     loadDisplay(){
         const historicDay = this.findHistoricDay(historic)
 
-        this.renderCardDisplay(historicDay)
-        this.showHideMilliseconds()
+        if(historicDay)
+            this.splitTime(historicDay.task_time)
+        
+        this.renderCardDisplay()
     },
 
     findHistoricDay(historic){
@@ -31,17 +33,35 @@ const page = {
             const now = new Date()
             const dateItem = new Date(task_date)
 
-            const historicalDayExist = now.getDay() == dateItem.getDay()
+            const historicalDayExist = now.getDate() == dateItem.getDate()
             const sameTypeOfTask = id_type == selectTaskType.value
 
             return historicalDayExist && sameTypeOfTask
         })
     },
 
-    renderCardDisplay(historicDay){
-        cardDisplay.innerHTML = historicDay
-            ? `<label>${historicDay.task_time}:00<small class="milliseconds">.00</small></label>`
-            : '<label>00:00:00<small class="milliseconds">.00</small></label>'
+    splitTime(timer){
+        const divided = timer.split(':')
+
+        this.hours = divided[0]
+        this.minutes = divided[1]
+        this.seconds = 0
+    },
+
+    renderCardDisplay(){
+        const hours = this.convertForTwoDigits(this.hours)
+        const minutes = this.convertForTwoDigits(this.minutes)
+        const seconds = this.convertForTwoDigits(this.seconds)
+        const milliseconds = this.convertForTwoDigits(this.milliseconds)
+
+        cardDisplay.innerHTML = 
+            `<label>${hours}:${minutes}:${seconds}<small class="milliseconds">.${milliseconds}</small></label>`
+        
+        this.showHideMilliseconds()
+    },
+
+    convertForTwoDigits(time){
+        return String(time).length == 1 ? `0${time}` : time
     },
 
     changeTaskTape(){
@@ -61,25 +81,13 @@ const page = {
 
             if(!this.timerIsRunning) return
 
-            cardDisplay.innerHTML = 
-            `<label>${this.hours}:${this.minutes}:${this.seconds}<small class="milliseconds">.${this.milliseconds}</small></label>`
+            this.renderCardDisplay()
             
             this.milliseconds++
+            this.resetPointer('milliseconds', 100, 'seconds')
+            this.resetPointer('seconds', 60, 'minutes')
+            this.resetPointer('minutes', 60, 'hours')
 
-            if(this.milliseconds == 100){
-                this.milliseconds = 0
-                this.seconds++
-            }
-
-            if(this.seconds == 60){
-                this.seconds = 0
-                this.minutes++
-            }
-
-            if(this.minutes == 60){
-                this.minutes = 0
-                this.hours++
-            }
         }
     },
 
@@ -87,4 +95,21 @@ const page = {
         this.timerIsRunning = false
     },
 
+    resetPointer(timer, limit, increment){
+        if(page[timer] == limit){
+            page[timer] = 0
+            page[increment]++
+        }   
+    }
+
 }
+
+/*
+    a pagina inicia com as variaveis de tempo zeradas.
+
+    a função load chama a função loadDisplay.
+
+    a função loadDisplay tem a tarefa de verificar o tipo de tarefa
+    e caso exista no historico algum registro do dia atual com aquele mesmo tipo de tarefa
+    as variaveis são alteradas e apartir delas o display é renderizado
+*/
