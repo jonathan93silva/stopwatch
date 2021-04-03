@@ -20,21 +20,17 @@
             </div>
             <div class="transparent-box">
                 <select data-js="select-taskType">
-                    <option value="1">Estudos de programação</option>
-                    <option value="2">Desenvolvimento projetos pessoais</option>
-                    <option value="3">Desenvolvimento projetos da empresa</option>
                 </select>
             </div>
         </section>
         <section class="display">
             <div class="card-display">
-                <label>00:00:11<small class="milliseconds">.00</small></label>
+                <label>00:00:00<small class="milliseconds">.00</small></label>
             </div>
         </section>
         <section class="buttons">
             <button class="btn btnIniciar"><img src="./imgs/play.svg" alt="play"> Iniciar</button>
             <button class="btn btnPause"><img src="./imgs/pause.svg" alt="pause"> Pausar</button>
-            <button class="btn btnPararSalvar"><img src="./imgs/stop.svg" alt="parar e salvar"> Parar e salvar</button>
             <button class="btn btnRelatorio"><img src="./imgs/reports.svg" alt="relatorio"> Relatório</button>
         </section>
         <section class="table-results d-none">
@@ -75,7 +71,6 @@
         </section>
     </div>
 
-    <script src="scripts/data.js"></script>
     <script src="scripts/events.js"></script>
     <script src="scripts/app.js"></script>
 </body>

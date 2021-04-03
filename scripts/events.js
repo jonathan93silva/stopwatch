@@ -10,6 +10,6 @@ const btnPause = document.querySelector('.btnPause')
 
 window.onload = () => page.load()
 checkMilliseconds.onchange = () => page.showHideMilliseconds()
-selectTaskType.onchange = ()=> page.changeTaskTape()
+selectTaskType.onchange = ()=> page.changeTaskType()
 btnIniciar.onclick = () => page.startStopwatch()
 btnPause.onclick = () => page.pauseStopwatch()

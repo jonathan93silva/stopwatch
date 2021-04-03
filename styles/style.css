@@ -115,9 +115,7 @@ section{
 
 .buttons button:nth-child(1){background-color: #3e85ff;}
 .buttons button:nth-child(2){background-color: #EF6262;}
-.buttons button:nth-child(3){background-color: #ffcf3d; color:#454545;}
-.buttons button:nth-child(4){background-color: #28A745;}
-.buttons button:nth-child(5){background-color: #6B6B6B;}
+.buttons button:nth-child(3){background-color: #28A745;}
 
 .table-results{
     justify-content: center;
